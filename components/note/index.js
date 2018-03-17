@@ -1,31 +1,36 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet,ScrollView,View, TouchableOpacity } from 'react-native'
+import { StyleSheet,ScrollView,View, Text } from 'react-native'
 
 const styles = StyleSheet.create({
   note:{
-    // flex:1,
-    height:"50%",
+    flex:1,
+    justifyContent: 'center',
+    alignItems: 'center',
     position: 'absolute',
     left: 0,
     right: 0,
-    bottom: 0
+    top: 0,
+    marginTop:200
   }
 });
 
 class Note extends React.Component {
   render () {
+    const {notes} = this.props;
     return (
       <View style={styles.note}>
-        Redux here pls
+        <Text>ReduxHere!</Text>
+        <Text>{notes}</Text>
       </View>
     )
   }
 }
 
-const mapStateToProps = function(){
-  //TBC HERE
-};
+function mapStateToProps(state){
+  return{
+    notes:state.data.notes,
+  }
+}
 
-
-export default connect()(Note)
+export default connect(mapStateToProps)(Note)

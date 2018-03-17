@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet,ScrollView,View, TouchableOpacity } from 'react-native'
-import Key from '../key';
+import Octave from '../octave';
 
 const styles = StyleSheet.create({
   button: {
@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   },
   keyboard:{
     // flex:1,
-    height:"50%",
+    height:"20%",
     position: 'absolute',
     left: 0,
     right: 0,
@@ -23,23 +23,12 @@ class Keyboard extends React.Component {
     return (
       <View style={styles.keyboard}>
         <ScrollView horizontal = {true}>
-          <Key note={"C"}/>
-          <Key note={"D"}/>
-          <Key note={"E"}/>
-          <Key note={"F"}/>
-          <Key note={"G"}/>
-          <Key note={"C"}/>
-          <Key note={"D"}/>
-          <Key note={"E"}/>
-          <Key note={"F"}/>
-          <Key note={"G"}/>
-          <Key note={"C"}/>
-          <Key note={"D"}/>
-          <Key note={"E"}/>
-          <Key note={"F"}/>
-          <Key note={"G"}/>
-          <Key note={"C"}/>
-          <Key note={"D"}/>
+          {
+            [...Array(10)].map((x, i) =>
+              <Octave octave={i} key={i}/>
+            )
+          }
+          <Octave />
         </ScrollView>
       </View>
     )

@@ -1,13 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { Provider } from 'react-redux';
-import configureStore from './store/configureStore';
+import { createStore, applyMiddleware } from 'redux';
+import reduxThunk from 'redux-thunk';
+
+import reducers from './reducers';
 
 import Keyboard from './components/keyboard';
-import Key from './components/key/index';
 import Note from './components/note';
-
-const store = configureStore({});
+import MusicRow from './components/musicRow';
 
 const styles = StyleSheet.create({
   container: {
@@ -18,7 +19,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const store = configureStore({});
+const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
+
+const store = createStoreWithMiddleware(reducers);
 
 export default class App extends React.Component {
 
@@ -27,11 +30,14 @@ export default class App extends React.Component {
     return (
       <Provider store={store}>
         <View style={styles.container}>
-          <Text>Open up App.js to start working on your app!</Text>
+
+          <Note />
+
+
+          <Text>Open! up App.js to start working on your app!</Text>
           <Text>Changes you make will automatically reload.</Text>
           <Text>Shake your phone to open the developer menu.</Text>
 
-          <Note />
 
           <Keyboard />
 
