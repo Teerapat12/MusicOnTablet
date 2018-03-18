@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet,ScrollView,View, Image,Text} from 'react-native'
+import {quarterNoteUri, quarterSharpNoteUri} from '../constant';
 
 const styles = StyleSheet.create({
   musicRoom:{
@@ -66,12 +67,14 @@ const MusicNote = (note, index, roomSize) => {
     }
   });
 
+  const uri = !noteInfo.isSharp?quarterNoteUri:quarterSharpNoteUri;
+  console.log(uri);
+
   return (
       <Image
         key={index+"#"+note+"|"+noteXPosition}
         style={thisNoteStyle.musicNote}
-        source={{uri:'http://exchangedownloads.smarttech.com/public/content/a8/a8aff788-0941-4d21-812d-ed370f2a9c1c/previews/medium/0001.png'}}
-        // source={{uri:'http://www.pngall.com/wp-content/uploads/2016/09/Musical-Notes-Free-Download-PNG.png'}}
+        source={{uri}}
       />
     );
 }
