@@ -19,16 +19,28 @@ const styles = StyleSheet.create({
 });
 
 class Keyboard extends React.Component {
+
+  componentDidMount() {
+    const _scrollView = this.scrollView;
+
+    setTimeout(() => {
+      _scrollView.scrollTo({x:500,y:0,animated:true});
+      console.log("called DidMount");
+    }, 1);
+  }
+
   render () {
     return (
       <View style={styles.keyboard}>
-        <ScrollView horizontal = {true}>
+        <ScrollView
+          horizontal = {true}
+          ref={scrollView => this.scrollView = scrollView}
+        >
           {
-            [...Array(10)].map((x, i) =>
+            [...Array(4)].map((x, i) =>
               <Octave octave={i} key={i}/>
             )
           }
-          <Octave />
         </ScrollView>
       </View>
     )

@@ -32,6 +32,12 @@ const styles = {
     right: 0,
     bottom: 0,
     left: 45,
+  },
+  middleKey:{
+    color:'red'
+  },
+  normalKey:{
+    color:'black'
   }
 };
 
@@ -43,12 +49,14 @@ function chooseKeyStyle(type, octave, i){
     return {...styles.whiteKey};
 }
 
+
+
 class Key extends React.Component {
   render () {
     const {note,type,i, octave} = this.props;
     return (
       <TouchableOpacity style={chooseKeyStyle(type,octave, i)} onPress={()=>this.props.updateNotes(note+octave)}>
-        <Text>{note}</Text>
+        <Text style={!(note==="C" && octave===2)?styles.normalKey:styles.middleKey}>{note}</Text>
       </TouchableOpacity>
     )
   }

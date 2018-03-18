@@ -8,7 +8,6 @@ import reducers from './reducers';
 
 import Keyboard from './components/keyboard';
 import Note from './components/note';
-import MusicRow from './components/musicRow';
 
 const styles = StyleSheet.create({
   container: {
@@ -32,12 +31,6 @@ export default class App extends React.Component {
         <View style={styles.container}>
 
           <Note />
-
-
-          <Text>Open! up App.js to start working on your app!</Text>
-          <Text>Changes you make will automatically reload.</Text>
-          <Text>Shake your phone to open the developer menu.</Text>
-
 
           <Keyboard />
 
