@@ -24,7 +24,7 @@ class Keyboard extends React.Component {
     const _scrollView = this.scrollView;
 
     setTimeout(() => {
-      _scrollView.scrollTo({x:500,y:0,animated:true});
+      _scrollView.scrollTo({x:450,y:0,animated:true});
       console.log("called DidMount");
     }, 1);
   }
@@ -38,7 +38,7 @@ class Keyboard extends React.Component {
         >
           {
             [...Array(4)].map((x, i) =>
-              <Octave octave={i} key={i}/>
+              <Octave octave={i} key={i} />
             )
           }
         </ScrollView>

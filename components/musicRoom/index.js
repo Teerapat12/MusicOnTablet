@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet,ScrollView,View, Image,Text} from 'react-native'
+import { StyleSheet,View, Image,Text} from 'react-native'
 import {quarterNoteUri, quarterSharpNoteUri} from '../constant';
 
 const styles = StyleSheet.create({
@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   musicBox:{
     width:200,
     height:20,
-    borderWidth:0.2,
+    borderWidth:1,
     borderColor:'black',
   },
   musicNote:{
@@ -68,7 +68,6 @@ const MusicNote = (note, index, roomSize) => {
   });
 
   const uri = !noteInfo.isSharp?quarterNoteUri:quarterSharpNoteUri;
-  console.log(uri);
 
   return (
       <Image

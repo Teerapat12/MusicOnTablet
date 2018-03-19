@@ -75,7 +75,7 @@ class Note extends React.Component {
     const {currentTempoType, currentIndex} = option;
     return (
       <View style={styles.note}>
-        <Text>Notes! {notes.length>0?Math.max(...notes.map(note=>note.index)):0}</Text>
+        <Text>Notes: {notes.length>0?Math.max(...notes.map(note=>note.index)):0}</Text>
         {/*<Text>{notes}</Text>*/}
 
         <ScrollView
