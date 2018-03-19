@@ -50,7 +50,6 @@ function chooseKeyStyle(type, octave, i){
 }
 
 
-
 class Key extends React.Component {
   render () {
     const {note,type,i, octave} = this.props;
