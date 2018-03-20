@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet,ScrollView,View, TouchableOpacity } from 'react-native'
 import Octave from '../octave';
+import MenuBar from '../menuBar';
+
 
 const styles = StyleSheet.create({
   button: {
@@ -10,7 +12,7 @@ const styles = StyleSheet.create({
   },
   keyboard:{
     // flex:1,
-    height:"20%",
+    height:"28%",
     position: 'absolute',
     left: 0,
     right: 0,
@@ -32,8 +34,9 @@ class Keyboard extends React.Component {
   render () {
     return (
       <View style={styles.keyboard}>
+        <MenuBar/>
         <ScrollView
-          horizontal = {true}
+          horizontal = {true} d
           ref={scrollView => this.scrollView = scrollView}
         >
           {

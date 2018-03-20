@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet,View, Image,Text} from 'react-native'
-import {quarterNoteUri, quarterSharpNoteUri} from '../constant';
+import {quarterNoteUri, quarterSharpNoteUri, halfNoteUri, fullNoteUri, eighthNoteUri} from '../constant';
 
 const styles = StyleSheet.create({
   musicRoom:{
@@ -44,7 +44,27 @@ const getNotefromStr = (note) =>{
   }
 }
 
-const MusicNote = (note, index, roomSize) => {
+const getNoteUri = (beat,sharp) => {
+  let mapping = {
+    1: quarterNoteUri,
+    2: halfNoteUri,
+    4: fullNoteUri,
+    0.5: eighthNoteUri,
+  }
+
+  if (sharp) {
+    mapping = {
+      1: quarterSharpNoteUri,
+      2: quarterSharpNoteUri,
+      4: quarterSharpNoteUri,
+      0.5: eighthNoteUri,
+    }
+  }
+  return mapping[beat];
+
+}
+
+const MusicNote = (note, beat, index, roomSize) => {
 
   const roomIndex = index%roomSize;
 
@@ -67,15 +87,15 @@ const MusicNote = (note, index, roomSize) => {
     }
   });
 
-  const uri = !noteInfo.isSharp?quarterNoteUri:quarterSharpNoteUri;
+  const uri = getNoteUri(beat,noteInfo.isSharp); // !noteInfo.isSharp?quarterNoteUri:quarterSharpNoteUri;
 
   return (
-      <Image
-        key={index+"#"+note+"|"+noteXPosition}
-        style={thisNoteStyle.musicNote}
-        source={{uri}}
-      />
-    );
+    <Image
+      // key={index+"#"+note+"|"+noteXPosition}
+      style={thisNoteStyle.musicNote}
+      source={{uri}}
+    />
+  );
 }
 class MusicRoom extends React.Component {
   render () {
@@ -83,11 +103,11 @@ class MusicRoom extends React.Component {
     return (
       <View style={styles.musicRoom}>
         <View style={styles.gap}/>
-        
-          <View style={styles.musicBox}></View>
-          <View style={styles.musicBox}></View>
-          <View style={styles.musicBox}></View>
-          <View style={styles.musicBox}></View>
+
+        <View style={styles.musicBox}></View>
+        <View style={styles.musicBox}></View>
+        <View style={styles.musicBox}></View>
+        <View style={styles.musicBox}></View>
 
         <View style={styles.gap}/>
         <View style={styles.musicBox}></View>
@@ -112,7 +132,7 @@ class MusicRoom extends React.Component {
         {/*{MusicNote("B2",3 , size)}*/}
 
         <Text>{notes.map(note=>note.key)}</Text>
-        {notes.map(note=>MusicNote(note.key, note.index , 4))}
+        {notes.map(note=>MusicNote(note.key, note.beat, note.index , 4))}
       </View>
     )
   }
