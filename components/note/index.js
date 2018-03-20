@@ -3,9 +3,14 @@ import { connect } from 'react-redux';
 import { StyleSheet,ScrollView,View, Text, Image, InteractionManager } from 'react-native'
 
 import MusicRoom from '../musicRoom';
+import {trademark} from '../constant';
 
 
 const styles = StyleSheet.create({
+  title:{
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
   note:{
     flex:1,
     justifyContent: 'center',
@@ -39,13 +44,12 @@ class Note extends React.Component {
   }
 
 
-  renderNotes(notes){
+  renderNotes(notes,musicRoomSize){
     const maxNoteIndex = notes.length>0?Math.max(...notes.map(note=>note.index)):0;
 
-    const musicRoomSize = 4;
     let musicSheet = []
     for(let i=0;i<=maxNoteIndex;i+=musicRoomSize){
-      const selectedNote = notes.filter(note=>note.index>=i&& note.index<i+4);
+      const selectedNote = notes.filter(note=>note.index>=i&& note.index<i+musicRoomSize);
 
       musicSheet.push(<MusicRoom notes={selectedNote} size={musicRoomSize} key={i}/>);
     }
@@ -60,7 +64,7 @@ class Note extends React.Component {
 
     setTimeout(() => {
       _scrollView.scrollTo({x:1000000,y:0,animated:true});
-      console.log("called DidMount");
+      // console.log("called DidMount");
     }, 1);
   }
 
@@ -72,12 +76,12 @@ class Note extends React.Component {
 
   render () {
     const {notes, option} = this.props;
-    const {currentTempoType, currentIndex} = option;
+    const {currentTempoType, currentIndex, tempoPerRoom,songName} = option;
     return (
       <View style={styles.note}>
-        <Text>Notes: {notes.length>0?Math.max(...notes.map(note=>note.index)):0}</Text>
-        {/*<Text>{notes}</Text>*/}
-
+        <Text style={styles.title}>{songName}</Text>
+        <Text>{trademark}</Text>
+        {/*<Text>Notes: {notes.length>0?Math.max(...notes.map(note=>note.index)):0} {tempoPerRoom}</Text>*/}
         <ScrollView
           horizontal = {true}
           ref={scrollView => this.scrollView = scrollView}
@@ -90,7 +94,7 @@ class Note extends React.Component {
             />
             <Text>               </Text>
           </View>
-          {this.renderNotes(notes)}
+          {this.renderNotes(notes,tempoPerRoom)}
 
         </ScrollView>
       </View>

@@ -3,6 +3,9 @@ export const DATA_AVAILABLE = 'DATA_AVAILABLE';
 export const UPDATE_NOTES = 'update_notes';
 
 export const UPDATE_TEMPO_TYPE = 'update_tempo_type';
+export const UPDATE_TEMPO_PERROOM = 'update_tempo_perroom';
+export const UPDATE_SONG_NAME = 'update_song_name';
+export const LOAD_NEW_SONG = 'load_new_song';
 
 
 
@@ -16,3 +19,6 @@ export const halfNoteUri = "https://raw.githubusercontent.com/Teerapat12/MusicOn
 export const fullNoteUri = "https://raw.githubusercontent.com/Teerapat12/MusicOnTablet/master/img/fullNote2.png";
 export const fullNoteMenuUri = "http://exchangedownloads.smarttech.com/public/content/8d/8ded9a3b-8d73-4e7a-8602-7a79b42326f5/previews/medium/0001.png";
 export const eighthNoteUri = "https://static.thenounproject.com/png/88567-200.png";
+
+
+export const trademark = '=Demo by Teerapat=';

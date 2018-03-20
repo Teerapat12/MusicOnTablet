@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { DATA_AVAILABLE, UPDATE_NOTES, UPDATE_TEMPO_TYPE } from "../components/constant" //Import the actions types constant we defined in our actions
+import { DATA_AVAILABLE, UPDATE_NOTES, UPDATE_TEMPO_TYPE, UPDATE_TEMPO_PERROOM, UPDATE_SONG_NAME,LOAD_NEW_SONG } from "../components/constant" //Import the actions types constant we defined in our actions
 
 const init_notes = [
   // {key:"C1",beat:1, index:0},
@@ -10,6 +10,7 @@ const init_notes = [
   ]
 
 const init_option = {
+  songName:'MySong01',
   tempoPerRoom:4,
   currentIndex:0,
   currentTempoType:1
@@ -25,6 +26,12 @@ const dataReducer = (state = dataState, action) => {
       return {...state, hello:'world'};
     case UPDATE_TEMPO_TYPE:
       return {...state ,option:{...state.option,currentTempoType:action.payload}};
+    case UPDATE_TEMPO_PERROOM:
+      return {...state ,option:{...state.option,tempoPerRoom:action.payload}};
+    case UPDATE_SONG_NAME:
+      return {...state ,option:{...state.option,songName:action.payload}};
+    case LOAD_NEW_SONG:
+      return {...state ,...action.payload};
     case UPDATE_NOTES:
       const {currentTempoType,currentIndex} = state.option;
 
