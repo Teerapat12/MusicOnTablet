@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet,View, Image,Text, TouchableOpacity} from 'react-native'
 import {connect} from 'react-redux';
-import {quarterNoteUri, halfNoteUri ,fullNoteUri, eighthNoteUri} from '../constant';
+import {quarterNoteUri, halfNoteUri ,fullNoteMenuUri, eighthNoteUri} from '../constant';
 import {updateTempoType} from './controller';
 
 const styles = StyleSheet.create({
@@ -80,7 +80,7 @@ class MenuBar extends React.Component {
 
           {TempoButton(1,currentTempoType, quarterNoteUri, updateTempoType)}
           {TempoButton(2,currentTempoType, halfNoteUri, updateTempoType)}
-          {TempoButton(4,currentTempoType, fullNoteUri, updateTempoType)}
+          {TempoButton(4,currentTempoType, fullNoteMenuUri, updateTempoType)}
           {TempoButton(0.5,currentTempoType, eighthNoteUri, updateTempoType)}
 
 
