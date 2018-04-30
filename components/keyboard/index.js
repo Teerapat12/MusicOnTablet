@@ -4,6 +4,7 @@ import Octave from '../octave';
 import MenuBar from '../menuBar';
 
 
+
 const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
@@ -29,6 +30,7 @@ class Keyboard extends React.Component {
       _scrollView.scrollTo({x:450,y:0,animated:true});
       console.log("called DidMount");
     }, 1);
+
   }
 
   render () {

@@ -1,6 +1,8 @@
 import React from 'react';
-import { StyleSheet,View, Image,Text} from 'react-native'
+import {connect} from 'react-redux';
+import { StyleSheet,View, Image,Text, TouchableWithoutFeedback} from 'react-native'
 import {quarterNoteUri, quarterSharpNoteUri, halfNoteUri, fullNoteUri, eighthNoteUri} from '../constant';
+import {selectNoteIndex} from './controller'
 
 const styles = StyleSheet.create({
   musicRoom:{
@@ -51,20 +53,11 @@ const getNoteUri = (beat,sharp) => {
     4: fullNoteUri,
     0.5: eighthNoteUri,
   }
-
-  if (sharp) {
-    mapping = {
-      1: quarterSharpNoteUri,
-      2: quarterSharpNoteUri,
-      4: quarterSharpNoteUri,
-      0.5: eighthNoteUri,
-    }
-  }
   return mapping[beat];
 
 }
 
-const MusicNote = (note, beat, index, roomSize) => {
+const MusicNote = (note, beat, index, roomSize, isCurrent, onClick) => {
 
   const roomIndex = index%roomSize;
 
@@ -84,22 +77,56 @@ const MusicNote = (note, beat, index, roomSize) => {
       left: noteXPosition,
       right: 0,
       top: noteYPosition,
+      backgroundColor:isCurrent?'#d1e0e0':null,
     }
   });
 
-  const uri = getNoteUri(beat,noteInfo.isSharp); // !noteInfo.isSharp?quarterNoteUri:quarterSharpNoteUri;
+  const uri = getNoteUri(beat); // !noteInfo.isSharp?quarterNoteUri:quarterSharpNoteUri;
 
+  if(noteInfo.isSharp){
+    const sharpStyle = StyleSheet.create({
+      sharp: {
+        width: 10,
+        height: 10,
+        position: 'absolute',
+        left: noteXPosition,
+        right: 0,
+        top: noteYPosition,
+      }
+    });
+
+    return (
+      [
+        <TouchableWithoutFeedback onPress={()=>onClick(index)} key={index+"#"+note+"|"+noteXPosition+"isNote"+Math.random()}>
+        <Image
+          key={index+"#"+note+"|"+noteXPosition}
+          style={thisNoteStyle.musicNote}
+          source={{uri}}
+
+        />
+        </TouchableWithoutFeedback>,
+        <Image
+           key={index+"#"+note+"|"+noteXPosition+"isSharp"}
+          style={sharpStyle.sharp}
+          source={{uri:"https://cdn.pixabay.com/photo/2012/04/11/12/20/sharp-note-27902_1280.png"}}
+        />
+      ]
+    );
+  }
   return (
-    <Image
-      // key={index+"#"+note+"|"+noteXPosition}
-      style={thisNoteStyle.musicNote}
-      source={{uri}}
-    />
+      <TouchableWithoutFeedback onPress={()=>onClick(index)} key={index+"#"+note+"|"+noteXPosition+"isNote"+Math.random()}>
+        <Image
+          key={index+"#"+note+"|"+noteXPosition}
+          style={thisNoteStyle.musicNote}
+          source={{uri}}
+        />
+      </TouchableWithoutFeedback>
   );
 }
 class MusicRoom extends React.Component {
   render () {
-    const {notes,size} = this.props;
+    const {notes,size,option} = this.props;
+    const {currentIndex} = option;
     return (
       <View style={styles.musicRoom}>
         <View style={styles.gap}/>
@@ -118,24 +145,17 @@ class MusicRoom extends React.Component {
         <View style={styles.gap}/>
 
 
-        {/*{MusicNote("E0",2 , size)}*/}
-        {/*{MusicNote("F0",3 , size)}*/}
-
-
-
-        {/*{MusicNote("C2",0 , size)}*/}
-        {/*{MusicNote("D2",1 , size)}*/}
-        {/*{MusicNote("E2",2 , size)}*/}
-        {/*{MusicNote("F2",3 , size)}*/}
-        {/*{MusicNote("G2",3 , size)}*/}
-        {/*{MusicNote("A2",3 , size)}*/}
-        {/*{MusicNote("B2",3 , size)}*/}
-
-        <Text>{notes.map(note=>note.key)}</Text>
-        {notes.map(note=>MusicNote(note.key, note.beat, note.index , 4))}
+        {/*<Text>{notes.map(note=>note.key)}</Text>*/}
+        {notes.map(note=>MusicNote(note.key, note.beat, note.index , size, note.index===currentIndex,this.props.selectNoteIndex))}
       </View>
     )
   }
 }
 
-export default MusicRoom
+function mapStateToProps(state){
+  return{
+    option:state.data.option,
+  }
+}
+
+export default connect(mapStateToProps,{selectNoteIndex})(MusicRoom);
