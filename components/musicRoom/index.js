@@ -1,6 +1,8 @@
 import React from 'react';
-import { StyleSheet,View, Image,Text} from 'react-native'
+import {connect} from 'react-redux';
+import { StyleSheet,View, Image,Text, TouchableWithoutFeedback} from 'react-native'
 import {quarterNoteUri, quarterSharpNoteUri, halfNoteUri, fullNoteUri, eighthNoteUri} from '../constant';
+import {selectNoteIndex} from './controller'
 
 const styles = StyleSheet.create({
   musicRoom:{
@@ -55,7 +57,7 @@ const getNoteUri = (beat,sharp) => {
 
 }
 
-const MusicNote = (note, beat, index, roomSize) => {
+const MusicNote = (note, beat, index, roomSize, isCurrent, onClick) => {
 
   const roomIndex = index%roomSize;
 
@@ -75,6 +77,7 @@ const MusicNote = (note, beat, index, roomSize) => {
       left: noteXPosition,
       right: 0,
       top: noteYPosition,
+      backgroundColor:isCurrent?'#d1e0e0':null,
     }
   });
 
@@ -94,12 +97,14 @@ const MusicNote = (note, beat, index, roomSize) => {
 
     return (
       [
+        <TouchableWithoutFeedback onPress={()=>onClick(index)} key={index+"#"+note+"|"+noteXPosition+"isNote"+Math.random()}>
         <Image
           key={index+"#"+note+"|"+noteXPosition}
           style={thisNoteStyle.musicNote}
           source={{uri}}
 
-        />,
+        />
+        </TouchableWithoutFeedback>,
         <Image
            key={index+"#"+note+"|"+noteXPosition+"isSharp"}
           style={sharpStyle.sharp}
@@ -109,18 +114,19 @@ const MusicNote = (note, beat, index, roomSize) => {
     );
   }
   return (
-    [
-    <Image
-      key={index+"#"+note+"|"+noteXPosition}
-      style={thisNoteStyle.musicNote}
-      source={{uri}}
-    />
-    ]
+      <TouchableWithoutFeedback onPress={()=>onClick(index)} key={index+"#"+note+"|"+noteXPosition+"isNote"+Math.random()}>
+        <Image
+          key={index+"#"+note+"|"+noteXPosition}
+          style={thisNoteStyle.musicNote}
+          source={{uri}}
+        />
+      </TouchableWithoutFeedback>
   );
 }
 class MusicRoom extends React.Component {
   render () {
-    const {notes,size} = this.props;
+    const {notes,size,option} = this.props;
+    const {currentIndex} = option;
     return (
       <View style={styles.musicRoom}>
         <View style={styles.gap}/>
@@ -140,10 +146,16 @@ class MusicRoom extends React.Component {
 
 
         {/*<Text>{notes.map(note=>note.key)}</Text>*/}
-        {notes.map(note=>MusicNote(note.key, note.beat, note.index , size))}
+        {notes.map(note=>MusicNote(note.key, note.beat, note.index , size, note.index===currentIndex,this.props.selectNoteIndex))}
       </View>
     )
   }
 }
 
-export default MusicRoom
+function mapStateToProps(state){
+  return{
+    option:state.data.option,
+  }
+}
+
+export default connect(mapStateToProps,{selectNoteIndex})(MusicRoom);

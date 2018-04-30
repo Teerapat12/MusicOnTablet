@@ -24,6 +24,7 @@
     "react-native": "0.52.0",
     "react-native-dialog-component": "^0.2.17",
     "react-native-material-dialog": "^0.7.4",
+    "react-native-sound": "^0.10.9",
     "react-redux": "^5.0.7",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0"

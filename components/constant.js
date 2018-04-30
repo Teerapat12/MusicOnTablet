@@ -7,7 +7,9 @@ export const UPDATE_TEMPO_PERROOM = 'update_tempo_perroom';
 export const UPDATE_SONG_NAME = 'update_song_name';
 export const LOAD_NEW_SONG = 'load_new_song';
 
+export const SELECT_NOTE_INDEX = 'select_note_index';
 
+export const DELETE_NOTE = 'delete_note';
 
 
 // Link
@@ -21,4 +23,4 @@ export const fullNoteMenuUri = "http://exchangedownloads.smarttech.com/public/co
 export const eighthNoteUri = "https://static.thenounproject.com/png/88567-200.png";
 
 
-export const trademark = '=Demo by Teerapat=';
+export const trademark = '';

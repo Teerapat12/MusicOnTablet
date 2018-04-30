@@ -1,4 +1,4 @@
-import {UPDATE_TEMPO_TYPE, UPDATE_TEMPO_PERROOM, UPDATE_SONG_NAME,LOAD_NEW_SONG} from '../constant'
+import {UPDATE_TEMPO_TYPE, UPDATE_TEMPO_PERROOM, UPDATE_SONG_NAME,LOAD_NEW_SONG, DELETE_NOTE} from '../constant'
 import {AsyncStorage} from 'react-native';
 
 export function updateTempoType(newTempoType){
@@ -33,8 +33,13 @@ export function loadNewSong(songName){
       });
     })
 
+  }
+}
 
 
 
+export function deleteNote(){
+  return{
+    type:DELETE_NOTE,
   }
 }

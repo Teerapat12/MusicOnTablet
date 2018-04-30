@@ -2,8 +2,8 @@ import React from 'react';
 import { StyleSheet,View, Image,Text, TouchableOpacity, TextInput, Button, AsyncStorage} from 'react-native'
 import {connect} from 'react-redux';
 
-import {quarterNoteUri, halfNoteUri ,fullNoteMenuUri, eighthNoteUri} from '../constant';
-import {updateTempoType,updateTempoPerRoom, updateSongName, loadNewSong} from './controller';
+import {quarterNoteUri, halfNoteUri ,fullNoteMenuUri, eighthNoteUri, } from '../constant';
+import {updateTempoType,updateTempoPerRoom, updateSongName, loadNewSong, deleteNote} from './controller';
 
 import { SinglePickerMaterialDialog } from 'react-native-material-dialog';
 
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
   rightMenu:{
     height:40,
-    width:"40%",
+    width:"45%",
     borderRadius:30,
     borderWidth:3,
     borderColor:'black',
@@ -109,7 +109,6 @@ class MenuBar extends React.Component {
 
     this.setState({songList:keys,loadDialogVisible:true});
 
-    console.log(keys);
   }
 
   onLoadSong(){
@@ -128,10 +127,6 @@ class MenuBar extends React.Component {
             <Text>
               Song name:
             </Text>
-            <Text>
-              By 5722780046
-            </Text>
-
             <TextInput
               style={{height: 40}}
               placeholder="song name here!"
@@ -154,7 +149,6 @@ class MenuBar extends React.Component {
   render () {
     const {updateTempoType, option} = this.props;
     const {currentTempoType, tempoPerRoom, songName} = option;
-    console.log(songName);
     return (
       <View style={styles.menuBar}>
         <View style={styles.leftMenu}>
@@ -186,6 +180,13 @@ class MenuBar extends React.Component {
             <Image
               style={styles.musicNote}
               source={{uri:"https://cdn.iconscout.com/public/images/icon/free/png-512/retrieve-3c801d6b76c64387-512x512.png"}}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={()=>this.props.deleteNote()}>
+            <Image
+              style={styles.musicNote}
+              source={{uri:"https://d30y9cdsu7xlg0.cloudfront.net/png/68251-200.png"}}
             />
           </TouchableOpacity>
         </View>
@@ -227,4 +228,4 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps,{updateTempoType,updateTempoPerRoom,updateSongName, loadNewSong})(MenuBar);
+export default connect(mapStateToProps,{updateTempoType,updateTempoPerRoom,updateSongName, loadNewSong, deleteNote})(MenuBar);
