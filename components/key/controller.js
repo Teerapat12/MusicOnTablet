@@ -10,6 +10,13 @@ for(let i=1;i<=50;i++){
 async function loadMusic() {
   try {
     console.log("Start loading music");
+
+    // for(let i=1;i<=50;i++){
+    //   const uri = 'http://tutorth.com/piano_keys/ff-'+zeroPad(i+15,3)+'.wav'
+    //   await soundObjects[i].loadAsync({uri});
+    //   console.log(i);
+    // }
+
     // await soundObjects[1].loadAsync(require('../../audio/piano_keys/ff-018.wav'));
     // await soundObjects[2].loadAsync(require('../../audio/piano_keys/ff-019.wav'));
     // await soundObjects[3].loadAsync(require('../../audio/piano_keys/ff-020.wav'));
@@ -44,7 +51,7 @@ async function loadMusic() {
   }
 }
 
-loadMusic();
+// loadMusic();
 
 
 const mapNoteToNum = {
@@ -76,22 +83,25 @@ function noteToFFdapter(newNote){
   return keyNum
 }
 
+function zeroPad(n,length){
+  var s=n+"",needed=length-s.length;
+  if (needed>0) s=(Math.pow(10,needed)+"").slice(1)+s;
+  return s;
+}
+
+const playedKey = [];
 
 async function playSound (newNote) {
+  console.log(playedKey);
+  const keyNum = noteToFFdapter(newNote); // Plus starting note
 
-  const keyNum = noteToFFdapter(newNote); // Plus starting note here
-
-  //Play sound here
-  console.log(newNote);
-  console.log(keyNum);
-
-
+  if(!(playedKey.includes(keyNum)))
+    playedKey.push(keyNum);
 
   try {
-    console.log("Play sound "+keyNum);
-
+    console.log("Play sound: "+keyNum);
     switch(keyNum) {
-      case 1: await soundObjects[1].loadAsync({ uri: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' }); break;
+      case 1: await soundObjects[1].loadAsync(require('../../audio/piano_keys/ff-016.wav')); break;
       case 2: await soundObjects[2].loadAsync(require('../../audio/piano_keys/ff-017.wav')); break;
       case 3: await soundObjects[3].loadAsync(require('../../audio/piano_keys/ff-018.wav')); break;
       case 4: await soundObjects[4].loadAsync(require('../../audio/piano_keys/ff-019.wav')); break;
@@ -135,14 +145,28 @@ async function playSound (newNote) {
       case 42: await soundObjects[42].loadAsync(require('../../audio/piano_keys/ff-057.wav')); break;
       case 43: await soundObjects[43].loadAsync(require('../../audio/piano_keys/ff-058.wav')); break;
       case 44: await soundObjects[44].loadAsync(require('../../audio/piano_keys/ff-059.wav')); break;
+      case 45: await soundObjects[45].loadAsync(require('../../audio/piano_keys/ff-060.wav')); break;
+      case 46: await soundObjects[46].loadAsync(require('../../audio/piano_keys/ff-061.wav')); break;
+      case 47: await soundObjects[47].loadAsync(require('../../audio/piano_keys/ff-062.wav')); break;
+      case 48: await soundObjects[48].loadAsync(require('../../audio/piano_keys/ff-063.wav')); break;
     }
 
-    soundObjects[keyNum].playFromPositionAsync(0);
+    await soundObjects[keyNum].playFromPositionAsync(0).then(console.log("Unload too"));
+    if(playedKey.length>10) {
+      await soundObjects[playedKey[0]].unloadAsync();
+      playedKey.shift()
+      // console.log(playedKey)
+    }
+
     // Your sound is playing!
   } catch (error) {
     // An error occurred!
-    // console.log(error);
-    soundObjects[keyNum].playFromPositionAsync(0);
+    console.log("Error occured");
+    // console.log(String(error).includes("already loaded"));
+    if(!String(error).includes("already loaded")){
+      console.log(error);
+    }
+    await soundObjects[keyNum].playFromPositionAsync(0);
   }
 }
 
