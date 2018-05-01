@@ -5,7 +5,7 @@ import { StyleSheet,ScrollView,View, Text, Image, InteractionManager, Button, Sh
 import MusicRoom from '../musicRoom';
 import {trademark} from '../constant';
 
-import {playNotes} from './controller';
+import {playNotes} from '../key/controller';
 
 import { takeSnapshotAsync , FileSystem} from 'expo';
 
